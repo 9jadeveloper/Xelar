@@ -6,40 +6,42 @@ import "@splidejs/splide/dist/css/themes/splide-default.min.css";
 
 import { Link } from "react-router-dom";
 
-const Veggie = () => {
-  const [veggies, setVeggies] = useState([]);
+const Random = () => {
+  const [random, setRandom] = useState([]);
 
-  const getVeggies = async () => {
-    const getData = localStorage.getItem("veggies");
+  const getRandomRecipes = async () => {
+    const getData = localStorage.getItem("popular");
 
-    if (getData && getData !== "undefined") {
-      setVeggies(JSON.parse(getData));
+    if (getData) {
+      setRandom(JSON.parse(getData));
     } else {
       const resp = await fetch(
-        `https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&tags=vegetarian&number=10`
+        `https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=10`
       );
       const data = await resp.json();
-      setVeggies(data.recipes);
-      localStorage.setItem("veggies", JSON.stringify(data.recipes));
+      setRandom(data.recipes);
+      localStorage.setItem("popular", JSON.stringify(data.recipes));
       console.log(data.recipes);
     }
   };
 
   useEffect(() => {
-    getVeggies();
+    getRandomRecipes();
   }, []);
-
   return (
     <Wrapper>
-      <h3>Vegetarian Picks</h3>
+      <h3>Random Picks</h3>
       <Splide
         options={{
-          perPage: 3,
+          perPage: 4,
           arrows: false,
           pagination: false,
           drag: "free",
           gap: "5rem",
           breakpoints: {
+            1024: {
+              perPage: 3,
+            },
             767: {
               perPage: 2,
             },
@@ -49,7 +51,7 @@ const Veggie = () => {
           },
         }}
       >
-        {veggies.map(({ title, id, image }) => (
+        {random.map(({ title, id, image }) => (
           <SplideSlide key={id}>
             <Card>
               <Link to={`/recipe/${id}`}>
@@ -85,19 +87,19 @@ const Card = styled.div`
 
   p {
     position: absolute;
+    z-index: 10;
     left: 50%;
     bottom: 0;
     transform: translate(-50%, 0);
-    text-align: center;
     color: #fff;
     width: 100%;
     height: 40%;
+    text-align: center;
     font-weight: 600;
     font-size: 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 10;
   }
 `;
 
@@ -110,4 +112,4 @@ const Gradient = styled.div`
   border-radius: 2rem;
 `;
 
-export default Veggie;
+export default Random;
