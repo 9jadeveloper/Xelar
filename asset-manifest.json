@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Xelar/static/css/main.4c890991.css",
+    "main.js": "/Xelar/static/js/main.758049d5.js",
+    "index.html": "/Xelar/index.html",
+    "main.4c890991.css.map": "/Xelar/static/css/main.4c890991.css.map",
+    "main.758049d5.js.map": "/Xelar/static/js/main.758049d5.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4c890991.css",
+    "static/js/main.758049d5.js"
+  ]
+}
